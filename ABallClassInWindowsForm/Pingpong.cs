@@ -12,8 +12,8 @@ namespace ABallClassInWindowsForm
         public int HorizontalSpeed { get; set; }
         public int VerticalSpeed { get; set; }
         public SolidBrush BackgroundColor { get; set; }
-
-        Random random = new Random();
+   
+        readonly Random random = new Random();
 
         public Pingpong()
         {
@@ -21,8 +21,8 @@ namespace ABallClassInWindowsForm
             Height = 20;
             HorizontalCoordinate = 0;
             VerticalCoordinate = 0;
-            HorizontalSpeed = 2;
-            VerticalSpeed = 2;
+            HorizontalSpeed = 8;
+            VerticalSpeed = 8;
             BackgroundColor = new SolidBrush(Color.FromArgb(random.Next(0,255),random.Next(0,255),random.Next(0,255)));
         }
 

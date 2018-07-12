@@ -10,24 +10,11 @@ using System.Windows.Forms;
 
 namespace ABallClassInWindowsForm
 {
-    public class Colider
-    {
-        public bool IsCollided(Pingpong ball, BlockPanel blockPanel)
-        {
-            if (ball.VerticalCoordinate + ball.Height > blockPanel.VerticalCoordiante)
-            {
-                return true;
-            }
-
-            return false;
-        }
-    }
-
     public partial class Form1 : Form
     {
         private readonly Pingpong theBall = new Pingpong();
         private readonly BlockPanel blockPanel;
-        Colider colider = new Colider();
+        readonly Collider _collider = new Collider();
 
         public Form1()
         {
@@ -38,12 +25,14 @@ namespace ABallClassInWindowsForm
             Bounds = Screen.PrimaryScreen.Bounds; //make it fullscreen
 
 
-            blockPanel = new BlockPanel();
-            blockPanel.BackgroundColor = new SolidBrush(Color.Black);
-            blockPanel.Width = ClientSize.Width/5;
-            blockPanel.Height = ClientSize.Height / 20;
-            blockPanel.HorizontalCoordinate = ClientSize.Width/2-Width/2;
-            blockPanel.VerticalCoordiante = ClientSize.Height - ClientSize.Height / 20;
+            blockPanel = new BlockPanel
+            {
+                BackgroundColor = new SolidBrush(Color.Black),
+                Width = ClientSize.Width / 5,
+                Height = ClientSize.Height / 40,
+                HorizontalCoordinate = ClientSize.Width / 2 - Width / 2,
+                VerticalCoordiante = ClientSize.Height - ClientSize.Height / 40
+            };
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -70,7 +59,7 @@ namespace ABallClassInWindowsForm
 
             blockPanel.HorizontalCoordinate = Cursor.Position.X - blockPanel.Width / 2;
 
-            if (colider.IsCollided(theBall, blockPanel))
+            if (_collider.IsCollided(theBall, blockPanel))
             {
                 int verticalCoordinateUpdated = theBall.VerticalCoordinate + theBall.VerticalSpeed;
                 int bounceAmount = verticalCoordinateUpdated + theBall.Height - blockPanel.VerticalCoordiante;
@@ -99,11 +88,10 @@ namespace ABallClassInWindowsForm
             }
             else if (horizontalCoordinateUpdated <= 0)
             {
-//                int bounceAmount = -horizontalCoordinateUpdated;
-//                theBall.HorizontalCoordinate = bounceAmount;
-//                theBall.HorizontalSpeed = -theBall.HorizontalSpeed;
-//                isWallHit = true;
-                isGameOver = true;
+                int bounceAmount = -horizontalCoordinateUpdated;
+                theBall.HorizontalCoordinate = bounceAmount;
+                theBall.HorizontalSpeed = -theBall.HorizontalSpeed;
+                isWallHit = true;
             }
             else
             {
@@ -113,10 +101,13 @@ namespace ABallClassInWindowsForm
 
             if (verticalCoordinateUpdated + theBall.Height > ClientSize.Height)
             {
-                int bounceAmount = verticalCoordinateUpdated + theBall.Height - ClientSize.Height;
-                theBall.VerticalCoordinate = ClientSize.Height - bounceAmount - theBall.Height;
-                theBall.VerticalSpeed = -theBall.VerticalSpeed;
-                isWallHit = true;
+                //                int bounceAmount = verticalCoordinateUpdated + theBall.Height - ClientSize.Height;
+                //                theBall.VerticalCoordinate = ClientSize.Height - bounceAmount - theBall.Height;
+                //                theBall.VerticalSpeed = -theBall.VerticalSpeed;
+                //     isWallHit = true;
+                timer1.Enabled = false;
+                MessageBox.Show(@"GGWP");
+                MessageBox.Show("Trash");
             }
             else if (verticalCoordinateUpdated <= 0)
             {

@@ -12,7 +12,6 @@ namespace ABallClassInWindowsForm
 
         public BlockPanel()
         {
-            
         }
 
         public BlockPanel(int horizontalCoordinate, int verticalCoordiante, int width, int height, SolidBrush backgroundColor)
